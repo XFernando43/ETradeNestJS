@@ -1,13 +1,13 @@
 import { Module } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
-import { ProductModule } from './product/product.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { CategoriesModule } from './categories/categories.module';
+import { ProductModule } from './Product-Managment/product/product.module';
+import { CategoriesModule } from './Product-Managment/categories/Infracstructure/categories.module';
 
 
 @Module({
-  imports: [ProductModule,
+  imports: [
     TypeOrmModule.forRoot({
       type: 'mysql',
       host: 'localhost',
@@ -19,7 +19,8 @@ import { CategoriesModule } from './categories/categories.module';
       synchronize: false,
       logging:true, 
     }),
-    CategoriesModule
+    CategoriesModule,
+    ProductModule,
   ],
   controllers: [AppController],
   providers: [AppService],
