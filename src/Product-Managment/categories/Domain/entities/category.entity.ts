@@ -8,6 +8,6 @@ export class Category {
     categoryId:number;
     @Column()
     categoryName:string;
-    @OneToMany(()=> Product,(product)=>product.categoryId)
+    @OneToMany(()=> Product,(product)=>product.category)
     products: Product[];
 }

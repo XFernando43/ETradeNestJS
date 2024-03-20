@@ -1,19 +1,22 @@
+import { Category } from 'src/Product-Managment/categories/Domain/entities/category.entity';
+import { Column,  Entity,  JoinColumn, ManyToOne, PrimaryGeneratedColumn} from 'typeorm';
 
-import { Category } from "src/Product-Managment/categories/Domain/entities/category.entity";
-import { Column, Entity, JoinColumn, ManyToOne, OneToMany, PrimaryGeneratedColumn } from "typeorm";
-
-@Entity("Product")
+@Entity('Product')
 export class Product {
     @PrimaryGeneratedColumn()
-    productId:number;
+    productId: number;
     @Column()
-    productName:string;
+    productName: string;
     @Column()
     productDescription: string;
     @Column()
     productPrice: number;
+    @Column()
+    productStatus: string;
+    @Column()
+    productStock: number;
 
-    @ManyToOne(()=> Category, (category) => category.products)
-    @JoinColumn({name:'categoryId'})
-    categoryId:Category
+    @ManyToOne(() => Category, (category) => category.products)
+    @JoinColumn({ name: 'categoryId' })
+    category: Category;
 }
