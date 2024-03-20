@@ -4,6 +4,7 @@ import { AppService } from './app.service';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { ProductModule } from './Product-Managment/product/Infracstruture/product.module';
 import { CategoriesModule } from './Product-Managment/categories/Infracstructure/categories.module';
+import { SalesModule } from './sales/sales.module';
 
 
 @Module({
@@ -16,11 +17,12 @@ import { CategoriesModule } from './Product-Managment/categories/Infracstructure
       password: '123456789',
       database: 'etrade',
       entities: [__dirname + '/**/*.entity{.ts,.js}'],
-      synchronize: false,
+      synchronize: true,
       logging:true, 
     }),
     CategoriesModule,
     ProductModule,
+    SalesModule,
   ],
   controllers: [AppController],
   providers: [AppService],
