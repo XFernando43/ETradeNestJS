@@ -4,11 +4,11 @@ import { AppService } from './app.service';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { ProductModule } from './Product-Managment/product/Infracstruture/product.module';
 import { CategoriesModule } from './Product-Managment/categories/Infracstructure/categories.module';
-import { SalesModule } from './sales/sales.module';
-import { CartModule } from './cart/cart.module';
-import { AddressModule } from './address/address.module';
-import { UsersModule } from './users/users.module';
-
+import { SalesModule } from './Product-Managment/sales/sales.module';
+import { CartModule } from './Product-Managment/cart/cart.module';
+import { AddressModule } from './User-Managment/address/Infrastructure/address.module';
+import { UsersModule } from './User-Managment/users/users.module';
+import { RoleModule } from './User-Managment/role/role.module';
 
 @Module({
   imports: [
@@ -29,6 +29,9 @@ import { UsersModule } from './users/users.module';
     CartModule,
     AddressModule,
     UsersModule,
+    RoleModule,
+
+
   ],
   controllers: [AppController],
   providers: [AppService],
