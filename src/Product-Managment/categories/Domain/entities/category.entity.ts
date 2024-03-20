@@ -1,5 +1,5 @@
 
-import { Product } from "src/Product-Managment/product/entities/product.entity";
+import { Product } from "src/Product-Managment/product/Domain/entities/product.entity";
 import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from "typeorm";
 
 @Entity("Category")
