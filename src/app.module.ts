@@ -7,6 +7,7 @@ import { CategoriesModule } from './Product-Managment/categories/Infracstructure
 import { SalesModule } from './sales/sales.module';
 import { CartModule } from './cart/cart.module';
 import { AddressModule } from './address/address.module';
+import { UsersModule } from './users/users.module';
 
 
 @Module({
@@ -27,6 +28,7 @@ import { AddressModule } from './address/address.module';
     SalesModule,
     CartModule,
     AddressModule,
+    UsersModule,
   ],
   controllers: [AppController],
   providers: [AppService],
