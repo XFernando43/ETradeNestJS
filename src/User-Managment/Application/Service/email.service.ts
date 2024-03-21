@@ -1,10 +1,7 @@
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
-import { CreateEmailDto } from './dto/create-email.dto';
-import { UpdateEmailDto } from './dto/update-email.dto';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Address } from '../address/Domain/entities/address.entity';
 import { Repository } from 'typeorm';
-import { retry } from 'rxjs';
+import { Address } from 'src/User-Managment/Domain/Entities/address.entity';
 
 @Injectable()
 export class EmailService {

@@ -1,4 +1,3 @@
-import { User } from "src/User-Managment/users/entities/user.entity";
 import { Column, Entity, PrimaryColumn, PrimaryGeneratedColumn } from "typeorm";
 
 @Entity("Address")

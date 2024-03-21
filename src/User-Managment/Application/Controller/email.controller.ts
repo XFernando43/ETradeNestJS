@@ -1,7 +1,8 @@
 import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
-import { EmailService } from './email.service';
-import { CreateEmailDto } from './dto/create-email.dto';
-import { UpdateEmailDto } from './dto/update-email.dto';
+import { EmailService } from '../Service/email.service';
+import { CreateEmailDto } from 'src/User-Managment/Domain/dto/email/create-email.dto';
+import { UpdateEmailDto } from 'src/User-Managment/Domain/dto/email/update-email.dto';
+
 
 @Controller('email')
 export class EmailController {

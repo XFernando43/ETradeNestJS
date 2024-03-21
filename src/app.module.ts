@@ -6,9 +6,9 @@ import { ProductModule } from './Product-Managment/product/Infracstruture/produc
 import { CategoriesModule } from './Product-Managment/categories/Infracstructure/categories.module';
 import { SalesModule } from './Product-Managment/sales/sales.module';
 import { CartModule } from './Product-Managment/cart/cart.module';
-import { AddressModule } from './User-Managment/address/Infrastructure/address.module';
-import { UsersModule } from './User-Managment/users/users.module';
-import { RoleModule } from './User-Managment/role/role.module';
+import { AddressModule } from './User-Managment/InfraStructure/address.module';
+import { UsersModule } from './User-Managment/InfraStructure/users.module';
+import { RoleModule } from './User-Managment/InfraStructure/role.module';
 
 @Module({
   imports: [

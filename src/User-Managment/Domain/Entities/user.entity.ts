@@ -1,6 +1,6 @@
-import { Address } from "src/User-Managment/address/Domain/entities/address.entity";
-import { Role } from "src/User-Managment/role/entities/role.entity";
 import { Column, Entity, JoinColumn, OneToOne, PrimaryGeneratedColumn } from "typeorm";
+import { Role } from "./role.entity";
+import { Address } from "./address.entity";
 
 @Entity("Users")
 export class User {

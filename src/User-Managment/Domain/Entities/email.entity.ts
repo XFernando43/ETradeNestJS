@@ -1,5 +1,5 @@
-import { User } from "src/User-Managment/users/entities/user.entity";
 import { Column, Entity, JoinColumn, OneToOne, PrimaryGeneratedColumn } from "typeorm";
+import { User } from "./user.entity";
 
 @Entity("Emails")
 export class Email {
