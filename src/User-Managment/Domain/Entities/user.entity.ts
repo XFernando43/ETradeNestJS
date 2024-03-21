@@ -1,7 +1,5 @@
 import { Column, Entity, JoinColumn, ManyToOne, OneToOne, PrimaryGeneratedColumn } from "typeorm";
 import { Role } from "./role.entity";
-import { Address } from "./address.entity";
-import { Email } from "./email.entity";
 
 @Entity("Users")
 export class User {

@@ -8,6 +8,8 @@ export class Role {
     roleId:number;
     @Column()
     roleName:string;
+    @Column()
+    roleDescription:string;
 
     @OneToMany(()=> User,(User)=> User.role)
     users:User[]
