@@ -1,21 +1,27 @@
-import { Column, Entity, JoinColumn, OneToOne, PrimaryGeneratedColumn } from "typeorm";
+import { Column, Entity, JoinColumn, ManyToOne, OneToOne, PrimaryGeneratedColumn } from "typeorm";
 import { Role } from "./role.entity";
 import { Address } from "./address.entity";
+import { Email } from "./email.entity";
 
 @Entity("Users")
 export class User {
     @PrimaryGeneratedColumn()
     userId:number;
+
     @Column()
     username:string;
+    
     @Column()
-    roleId:number;
+    name:string;
 
-    @OneToOne(()=> Role)
+    @Column()
+    lastName:String;
+
+    @Column()
+    bornDate:Date;
+
+
+    @ManyToOne(()=> Role,(Role)=> Role.users)
     @JoinColumn({name:'roleId'})
     role:Role;
-
-    @OneToOne(()=> Address)
-    @JoinColumn({name:'addresId'})
-    addres:Address;
 }
