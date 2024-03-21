@@ -23,7 +23,15 @@ export class RoleService {
   async findAll() {
     try{
       const roles = await this.RoleRepository.find();
-      return roles;
+      if(roles.length > 0){
+        return roles;
+      }else{
+        return {
+          status:HttpStatus.ACCEPTED,
+          message:"roles vacios",
+          roles:roles
+        }
+      }
     }catch(error){
       throw new Error(`Error al buscar el Role: ${error.message}`);
     }
@@ -36,7 +44,14 @@ export class RoleService {
           roleId:id
         }
       })
-      return role;
+      if(role){
+        return role;
+      }else{
+        return{
+          status: HttpStatus.NOT_FOUND,
+          message:"Role not found"
+        }
+      }
     }catch(error){
       throw new Error(`Error al buscar el Role: ${error.message}`);
     }
@@ -45,7 +60,7 @@ export class RoleService {
   async update(id: number, updateRoleDto: UpdateRoleDto) {
     try{
       if (id <= 0) {
-        return new HttpException('CategoryID no valid', HttpStatus.NOT_FOUND);
+        return new HttpException('RoleID not valid', HttpStatus.NOT_FOUND);
       }
 
       const findRole= await this.RoleRepository.findOne({
@@ -55,12 +70,12 @@ export class RoleService {
       });
 
       if (!findRole) {
-        return new HttpException('Category not exist', HttpStatus.NOT_FOUND);
+        return new HttpException('Role not exist', HttpStatus.NOT_FOUND);
       }else{
-        const roleUpdated =  await this.RoleRepository.update(id, findRole);
+        const roleUpdated =  await this.RoleRepository.update(id, updateRoleDto);
         return {
           message: 'Update it',
-          Role: roleUpdated,
+          Role: updateRoleDto,
         };
       }
 
@@ -72,7 +87,7 @@ export class RoleService {
   async remove(id: number) {
     try{
             if (id <= 0) {
-                return new HttpException('CategoryID no valid', HttpStatus.NOT_FOUND);
+                return new HttpException('RoleID no valid', HttpStatus.NOT_FOUND);
             }
 
             const findRole = await this.RoleRepository.findOne({
@@ -82,7 +97,10 @@ export class RoleService {
             });
 
             if (!findRole) {
-                return new HttpException('Category not exist', HttpStatus.NOT_FOUND);
+                return {
+                  status: HttpStatus.NOT_FOUND,
+                  message:"Role not exist"
+                }
             }
 
             return await this.RoleRepository.delete(id);
