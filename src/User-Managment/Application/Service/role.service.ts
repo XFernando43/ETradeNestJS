@@ -13,8 +13,24 @@ export class RoleService {
 
   async create(createRoleDto: CreateRoleDto) {
     try{
-      const newRole = await this.RoleRepository.create(createRoleDto);
-      return await this.RoleRepository.save(newRole);
+      
+      const findRole = await this.RoleRepository.findOne({
+        where:{
+          roleName:createRoleDto.roleName
+        }
+      })
+
+      if(findRole){
+        return{
+          status:HttpStatus.CONFLICT,
+          message: "role Existing alredy"
+        }
+      }else{ 
+        const newRole = await this.RoleRepository.create(createRoleDto);
+        return await this.RoleRepository.save(newRole);
+      }
+
+
     }catch(error){
       throw new Error(`Ocurrió un error en el servidor: ${error.message}`);
     }
