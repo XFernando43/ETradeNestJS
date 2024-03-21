@@ -20,7 +20,7 @@ import { RoleModule } from './User-Managment/role/role.module';
       password: '123456789',
       database: 'etrade',
       entities: [__dirname + '/**/*.entity{.ts,.js}'],
-      synchronize: true,
+      synchronize: false,
       logging:true, 
     }),
     CategoriesModule,
