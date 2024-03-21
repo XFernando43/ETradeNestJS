@@ -1,23 +1,55 @@
-import { Injectable } from '@nestjs/common';
+import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { CreateEmailDto } from './dto/create-email.dto';
 import { UpdateEmailDto } from './dto/update-email.dto';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Address } from '../address/Domain/entities/address.entity';
+import { Repository } from 'typeorm';
+import { retry } from 'rxjs';
 
 @Injectable()
 export class EmailService {
-  create(createEmailDto: CreateEmailDto) {
-    return 'This action adds a new email';
+
+  constructor(@InjectRepository(Address) private readonly AddressRepository:Repository<Address>){}
+
+  async create(createEmailDto: any) {
+    try{
+      const newEmail = await this.AddressRepository.create(createEmailDto);
+      return this.AddressRepository.save(newEmail);
+    }catch(error){
+      throw new HttpException(error,HttpStatus.CONFLICT);
+    }
   }
 
-  findAll() {
-    return `This action returns all email`;
+  async findAll() {
+    try{
+      return await this.AddressRepository.find();
+    }catch(Error){
+      throw new Error
+    }
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} email`;
+  async findOne(id: number) {
+    try{
+      return await this.AddressRepository.findOne({
+        where:{
+          addressId:id
+        }
+      })
+    }catch(error){
+
+    }
   }
 
-  update(id: number, updateEmailDto: UpdateEmailDto) {
-    return `This action updates a #${id} email`;
+  async update(id: number, updateEmailDto: any) {
+    try{
+      if (id === 0) {
+        return 'product no econtrado';
+      } else {
+        return await this.AddressRepository.update(id, updateEmailDto);
+      }
+    }catch(error){
+      throw new HttpException(error, HttpStatus.CONFLICT);
+    }
   }
 
   remove(id: number) {
