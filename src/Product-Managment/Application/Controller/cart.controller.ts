@@ -1,7 +1,7 @@
 import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
-import { CartService } from './cart.service';
-import { CreateCartDto } from './dto/create-cart.dto';
-import { UpdateCartDto } from './dto/update-cart.dto';
+import { CartService } from '../Service/cart.service';
+import { CreateCartDto } from '../../Domain/Dto/cart/create-cart.dto';
+import { UpdateCartDto } from '../../Domain/Dto/cart/update-cart.dto';
 import { ApiTags } from '@nestjs/swagger';
 
 @Controller('cart')

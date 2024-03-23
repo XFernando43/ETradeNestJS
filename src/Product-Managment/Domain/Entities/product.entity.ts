@@ -1,4 +1,4 @@
-import { Category } from 'src/Product-Managment/categories/Domain/entities/category.entity';
+import { Category } from 'src/Product-Managment/Domain/Entities/category.entity';
 import { Column,  Entity,  JoinColumn, ManyToOne, PrimaryGeneratedColumn} from 'typeorm';
 
 @Entity('Product')

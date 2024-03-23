@@ -1,7 +1,7 @@
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
-import { CreateCategoryDto } from '../../Domain/dto/create-category.dto';
-import { UpdateCategoryDto } from '../../Domain/dto/update-category.dto';
-import { Category } from '../../Domain/entities/category.entity';
+import { CreateCategoryDto } from '../../Domain/Dto/categories/create-category.dto';
+import { UpdateCategoryDto } from '../../Domain/Dto/categories/update-category.dto';
+import { Category } from '../../Domain/Entities/category.entity';
 import { Repository } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
 
