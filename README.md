@@ -73,14 +73,22 @@ Nest is an MIT-licensed open source project. It can grow thanks to the sponsors 
 Nest is [MIT licensed](LICENSE).
 
 
-## TESTING
+## MySqlWorkbench
 ```bash
-# unit tests
-$ npm run test
+# Execute this at database to add delete on cascade
 
-# e2e tests
-$ npm run test:e2e
+ALTER TABLE users
+ADD CONSTRAINT fk_user_role
+FOREIGN KEY (roleId) REFERENCES roles(roleId) ON DELETE CASCADE;
 
-# test coverage
-$ npm run test:cov
+ALTER TABLE emails
+ADD CONSTRAINT fk_email_user
+FOREIGN KEY (userId) REFERENCES users(userId) ON DELETE CASCADE;
+
+ALTER TABLE emails
+DROP FOREIGN KEY FK_5c5c8bfed80c4531911123cc96b;
+ALTER TABLE emails
+ADD CONSTRAINT FK_5c5c8bfed80c4531911123cc96b
+FOREIGN KEY (UserId) REFERENCES users(userId) ON DELETE CASCADE;
+
 ```
