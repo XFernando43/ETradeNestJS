@@ -7,7 +7,7 @@ export class CreateUserDto {
     @ApiProperty()
     name:string;
     @ApiProperty()
-    lastName:String;
+    lastName:string;
     @ApiProperty()
     bornDate:Date;
 

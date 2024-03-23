@@ -1,6 +1,7 @@
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Console } from 'console';
+import { Email } from 'src/User-Managment/Domain/Entities/email.entity';
 import { Role } from 'src/User-Managment/Domain/Entities/role.entity';
 import { User } from 'src/User-Managment/Domain/Entities/user.entity';
 import { CreateUserDto } from 'src/User-Managment/Domain/dto/users/create-user.dto';
@@ -11,26 +12,19 @@ import { Repository } from 'typeorm';
 export class UsersService {
 
   constructor(@InjectRepository(User) private userRepository:Repository<User>,
-              @InjectRepository(Role) private roleRepository:Repository<Role>
+              @InjectRepository(Role) private roleRepository:Repository<Role>,
+              @InjectRepository(Email) private emailRepository:Repository<Email>
               ){}
 
   async create(createUserDto: CreateUserDto, roleId:number) {
     try{
 
       let roleFinded = await this.roleRepository.findOne({where:{roleId:roleId}});
+      const newUser = new User(createUserDto.name,createUserDto.username,createUserDto.lastName,createUserDto.bornDate,roleFinded);
+      const UserSaved = this.userRepository.create(newUser);
+      await this.userRepository.save(UserSaved);
+      return UserSaved;     
 
-      const newUser = new User();
-      newUser.username = createUserDto.username;
-      newUser.name = createUserDto.name;
-      newUser.lastName = createUserDto.lastName;
-      newUser.bornDate = createUserDto.bornDate;
-      newUser.role = roleFinded;
-      
-      const UserSaved = this.userRepository.create(createUserDto);
-      this.userRepository.save(newUser);
-
-      return UserSaved;
-      
     }catch(error){
       throw new HttpException("Error in server" + error, HttpStatus.CONFLICT);
     }

@@ -3,6 +3,14 @@ import { Role } from "./role.entity";
 
 @Entity("Users")
 export class User {
+    constructor(name:string, username:string, lastname:string, bornDate:Date, role:Role){
+        this.name = name;
+        this.username = username;
+        this.lastName = lastname;
+        this.bornDate = bornDate;
+        this.role = role;
+    }
+
     @PrimaryGeneratedColumn()
     userId:number;
 
@@ -13,7 +21,7 @@ export class User {
     name:string;
 
     @Column()
-    lastName:String;
+    lastName:string;
 
     @Column()
     bornDate:Date;

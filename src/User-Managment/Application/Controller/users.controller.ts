@@ -9,18 +9,20 @@ import { UpdateUserDto } from 'src/User-Managment/Domain/dto/users/update-user.d
 export class UsersController {
   constructor(private readonly usersService: UsersService) {}
 
-  @Post()
-  create(@Body() createUserDto: CreateUserDto, @Param(':roleId') roleId:number) {
+  @Post(':roleId')
+  create(@Body() createUserDto: CreateUserDto, @Param('roleId') roleId:number) {
+    console.log(roleId);
     return this.usersService.create(createUserDto, roleId);
   }
-
+  
   @Get()
   findAll() {
     return this.usersService.findAll();
   }
-
+  
   @Get(':id')
   findOne(@Param('id') id: string) {
+    console.log("ACA EN EL CONTROLLER ", id);
     return this.usersService.findOne(+id);
   }
 
