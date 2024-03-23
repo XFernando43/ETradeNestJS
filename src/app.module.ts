@@ -30,8 +30,6 @@ import { RoleModule } from './User-Managment/InfraStructure/role.module';
     AddressModule,
     UsersModule,
     RoleModule,
-
-
   ],
   controllers: [AppController],
   providers: [AppService],
