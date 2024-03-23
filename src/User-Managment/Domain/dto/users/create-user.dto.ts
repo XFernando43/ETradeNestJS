@@ -11,5 +11,10 @@ export class CreateUserDto {
     @ApiProperty()
     bornDate:Date;
 
+    @ApiProperty()
+    email:string;
+    @ApiProperty()
+    password:string;
+
     role: Role;
 }

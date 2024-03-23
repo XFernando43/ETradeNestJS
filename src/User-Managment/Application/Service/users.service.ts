@@ -21,11 +21,21 @@ export class UsersService {
 
       let roleFinded = await this.roleRepository.findOne({where:{roleId:roleId}});
       const newUser = new User(createUserDto.name,createUserDto.username,createUserDto.lastName,createUserDto.bornDate,roleFinded);
-      const UserSaved = this.userRepository.create(newUser);
-      await this.userRepository.save(UserSaved);
-      return UserSaved;     
+      const userDb = await this.userRepository.create(newUser);
+      await this.userRepository.save(userDb);
+
+      const newEmail = new Email(createUserDto.email,createUserDto.password); newEmail.user = newUser;
+      const EmailDb = await this.emailRepository.create(newEmail);      
+      await this.emailRepository.save(EmailDb);
+      
+      return {
+        status:201,
+        user: newUser,
+        email:newEmail
+      }
 
     }catch(error){
+      console.log(error);
       throw new HttpException("Error in server" + error, HttpStatus.CONFLICT);
     }
   }
