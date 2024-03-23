@@ -39,8 +39,17 @@ export class UsersService {
     }
   }
 
-  findAll() {
-    return `This action returns all users`;
+  async findAll() {
+    try{
+      const users = await this.userRepository.find({ relations: ['role'] });
+      return {
+        status:201,
+        users: users
+      }
+    }catch(error){
+      console.log(error);
+      throw new HttpException(error, HttpStatus.INTERNAL_SERVER_ERROR);
+    }
   }
 
   findOne(id: number) {
