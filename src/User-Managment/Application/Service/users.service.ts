@@ -51,13 +51,50 @@ export class UsersService {
       throw new HttpException(error, HttpStatus.INTERNAL_SERVER_ERROR);
     }
   }
-
-  findOne(id: number) {
-    return `This action returns a #${id} user`;
+  
+  async findOne(id: number) {
+    try{
+      const user = await this.userRepository.findOne({where:{
+        userId:id
+      }})
+      return {
+        status:201,
+        user: user
+      }
+    }catch(error){
+      console.log(error);
+      throw new HttpException(error, HttpStatus.INTERNAL_SERVER_ERROR);
+    }
   }
 
-  update(id: number, updateUserDto: UpdateUserDto) {
-    return `This action updates a #${id} user`;
+  async update(id: number, updateUserDto: UpdateUserDto) {
+    try{
+      const userFinded = await this.userRepository.findOne({
+        where:{
+          userId:id
+        }
+      })
+      if(!userFinded){
+        throw new HttpException("Usuario not found", HttpStatus.NOT_FOUND);
+      }else{
+        let userUpdated;
+        if(updateUserDto.roleId){
+          const roleFinded = await this.roleRepository.findOne({where:{roleId:updateUserDto.roleId}});
+          userUpdated = new UpdateUserDto(updateUserDto.name,updateUserDto.username,updateUserDto.lastName,roleFinded);
+        }
+        
+        userUpdated = new UpdateUserDto(updateUserDto.name,updateUserDto.username,updateUserDto.lastName);
+
+        await this.userRepository.update(id,userUpdated);
+        return {
+          status:200,
+          user: updateUserDto
+        }  
+      }
+    }catch(error){
+      console.log(error);
+      throw new HttpException(error, HttpStatus.INTERNAL_SERVER_ERROR);
+    }
   }
 
   remove(id: number) {
