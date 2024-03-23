@@ -97,7 +97,21 @@ export class UsersService {
     }
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} user`;
+  async remove(id: number) {
+    try{
+      const userFinded = await this.userRepository.findOne({where:{userId:id}});
+      if(userFinded){
+        await this.userRepository.delete(id);
+        return userFinded;
+      }else{
+        return {
+          status:404,
+          message:"Not User found"
+        }
+      }
+    }catch(error){
+      console.log(error);
+      throw new HttpException(error, HttpStatus.INTERNAL_SERVER_ERROR);
+    }
   }
 }
