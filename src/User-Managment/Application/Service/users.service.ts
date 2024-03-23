@@ -23,8 +23,7 @@ export class UsersService {
       const newUser = new User(createUserDto.name,createUserDto.username,createUserDto.lastName,createUserDto.bornDate,roleFinded);
       const userDb = await this.userRepository.create(newUser);
       await this.userRepository.save(userDb);
-
-      const newEmail = new Email(createUserDto.email,createUserDto.password); newEmail.user = newUser;
+      const newEmail = new Email(createUserDto.email,createUserDto.password); newEmail.user = userDb;
       const EmailDb = await this.emailRepository.create(newEmail);      
       await this.emailRepository.save(EmailDb);
       
