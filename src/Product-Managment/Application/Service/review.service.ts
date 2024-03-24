@@ -1,11 +1,19 @@
 import { Injectable } from '@nestjs/common';
 import { CreateReviewDto } from '../../Domain/Dto/Review/create-review.dto';
 import { UpdateReviewDto } from '../../Domain/Dto/Review/update-review.dto';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Review } from 'src/Product-Managment/Domain/Entities/review.entity';
+import { Repository } from 'typeorm';
 
 @Injectable()
 export class ReviewService {
-  create(createReviewDto: CreateReviewDto) {
-    return 'This action adds a new review';
+  constructor(@InjectRepository(Review) private ReviewRepository:Repository<Review>){}
+  async create(createReviewDto: CreateReviewDto) {
+    try{
+
+    }catch(error){
+      
+    }
   }
 
   findAll() {

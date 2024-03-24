@@ -2,7 +2,7 @@ import { Category } from 'src/Product-Managment/Domain/Entities/category.entity'
 import { Column,  Entity,  JoinColumn, ManyToOne, OneToMany, PrimaryGeneratedColumn} from 'typeorm';
 import { Review } from './review.entity';
 
-@Entity('Product')
+@Entity('Products')
 export class Product {
     @PrimaryGeneratedColumn()
     productId: number;
