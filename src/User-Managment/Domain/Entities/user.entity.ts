@@ -1,5 +1,7 @@
-import { Column, Entity, JoinColumn, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
+import { Column, Entity, JoinColumn, ManyToOne, OneToMany, PrimaryGeneratedColumn } from "typeorm";
 import { Role } from "./role.entity";
+import { ReviewModule } from "src/Product-Managment/Infracstruture/review.module";
+import { Review } from "src/Product-Managment/Domain/Entities/review.entity";
 
 @Entity("Users")
 export class User {
@@ -25,6 +27,6 @@ export class User {
     role:Role;
 
     
-
-
+    @OneToMany(()=> User,(user)=> user.userId)
+    reviews:Review[];
 }
