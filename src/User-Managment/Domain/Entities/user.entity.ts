@@ -10,24 +10,21 @@ export class User {
         this.bornDate = bornDate;
         this.role = role;
     }
-
     @PrimaryGeneratedColumn()
     userId:number;
-
     @Column()
     username:string;
-    
     @Column()
     name:string;
-
     @Column()
     lastName:string;
-
     @Column()
     bornDate:Date;
-
-
     @ManyToOne(()=> Role,(Role)=> Role.users)
     @JoinColumn({name:'roleId'})
     role:Role;
+
+    
+
+
 }
