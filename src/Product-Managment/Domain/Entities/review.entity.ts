@@ -4,6 +4,13 @@ import { Product } from "./product.entity";
 
 @Entity('reviews')
 export class Review {
+
+    constructor(content:string, user:User, product:Product){
+        this.content = content;
+        this.user = user;
+        this.Product = product
+    }
+
     @PrimaryGeneratedColumn()
     reviewId: number;
     @Column()
