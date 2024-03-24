@@ -9,19 +9,10 @@ import { ApiTags } from '@nestjs/swagger';
 export class CartController {
   constructor(private readonly cartService: CartService) {}
 
-  @Post()
-  create(@Body() createCartDto: CreateCartDto) {
-    return this.cartService.create(createCartDto);
-  }
-
-  @Get()
-  findAll() {
-    return this.cartService.findAll();
-  }
 
   @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.cartService.findOne(+id);
+  findByUser(@Param('id') id: string) {
+    return this.cartService.findByUser(+id);
   }
 
   @Patch(':id')
