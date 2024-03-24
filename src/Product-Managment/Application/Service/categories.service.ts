@@ -20,7 +20,7 @@ export class CategoriesService {
         }
     }
 
-    async getCategoryId(categoryId: number) {
+    async getCategoryId(categoryId: number):Promise<Category|any> {
         try {
             const category = await this.categoryRepository.findOne({
                 where: {

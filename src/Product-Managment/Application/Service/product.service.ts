@@ -3,15 +3,16 @@ import { CreateProductDto } from '../../Domain/Dto/product/create-product.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Product } from '../../Domain/Entities/product.entity';
 import { Repository } from 'typeorm';
-import { Category } from 'src/Product-Managment/Domain/Entities/category.entity';
+// import { Category } from 'src/Product-Managment/Domain/Entities/category.entity';
 import { ProductStatus } from 'src/Product-Managment/Domain/Enums/productStatus';
+import { CategoriesService } from './categories.service';
 
 @Injectable()
 export class ProductService {
   constructor(
     @InjectRepository(Product) private productRepository: Repository<Product>,
-    @InjectRepository(Category)
-    private categoryRepository: Repository<Category>,
+    // @InjectRepository(Category) private categoryRepository: Repository<Category>,
+    private CategoryService: CategoriesService,
   ) {}
 
   async getProducts() {
@@ -69,11 +70,25 @@ export class ProductService {
         return new HttpException('Product Already Exists', HttpStatus.CONFLICT);
       }
 
-      const category = await this.categoryRepository.findOne({
-        where: {
-          categoryId: _product.categoryId,
-        },
-      });
+
+
+
+
+
+
+
+
+
+
+
+      // const category = await this.categoryRepository.findOne({
+      //   where: {
+      //     categoryId: _product.categoryId,
+      //   },
+      // });
+
+      const category = await this.CategoryService.getCategoryId(_product.categoryId);
+      
 
       if (!category) {
         return new HttpException('Category Not found', HttpStatus.CONFLICT);
@@ -86,8 +101,16 @@ export class ProductService {
       newProduct.productStock = _product.productStock;
       newProduct.productStatus = _product.productStatus;
       newProduct.category = category;
-
+      
+      
       return await this.productRepository.save(newProduct);
+
+
+
+
+
+
+
     } catch (error) {
       throw new Error(`Ocurrió un error en el servidor: ${error.message}`);
     }

@@ -8,5 +8,6 @@ import { Category } from '../Domain/Entities/category.entity';
   imports:[TypeOrmModule.forFeature([Category])],
   controllers: [CategoriesController],
   providers: [CategoriesService],
+  exports:[CategoriesService] // siempre se debe indicar cuando se exporta un servicio para otro modulo
 })
 export class CategoriesModule {}
