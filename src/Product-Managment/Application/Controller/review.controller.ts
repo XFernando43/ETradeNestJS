@@ -14,6 +14,11 @@ export class ReviewController {
     return this.reviewService.create(createReviewDto);
   }
 
+  @Get(':productId')
+  getReviewsByProduct(@Param('productId') productId:number){
+    return this.reviewService.findByProduct(productId);
+  }
+
   @Get()
   findAll() {
     return this.reviewService.findAll();

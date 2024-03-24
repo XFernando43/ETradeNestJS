@@ -21,13 +21,28 @@ export class ReviewService {
       let newReviewDto = new Review(createReviewDto.content,userFinded,productFinded);
       const newReview = await this.ReviewRepository.create(newReviewDto);
       await this.ReviewRepository.save(newReview);
-
       return{
         status:200,
         review: newReview
       }
+    }catch(error){
+      console.log(error);
+      throw new HttpException(error, HttpStatus.BAD_GATEWAY);
+    }
+  }
 
-
+  async findByProduct(producId:number){
+    try{
+      const productFinded = await this.ProductRepository.findOne({where:{productId:producId}});
+      const reviews = await this.ReviewRepository.find({
+        where:{
+          Product:productFinded
+        }
+      })
+      return{
+        status:200,
+        reviews:reviews
+      }
     }catch(error){
       console.log(error);
       throw new HttpException(error, HttpStatus.BAD_GATEWAY);
