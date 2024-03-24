@@ -1,6 +1,6 @@
 import { Entity, PrimaryColumn } from "typeorm";
 
-@Entity('cartXproduct')
+@Entity('cartXproducts')
 export class Cart {
     constructor(cartId:number, productId:number){
         this.cartId=cartId;
