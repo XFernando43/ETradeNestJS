@@ -1,8 +1,11 @@
 import { User } from "src/User-Managment/Domain/Entities/user.entity";
-import { JoinColumn, OneToOne, PrimaryColumn, PrimaryGeneratedColumn } from "typeorm";
+import { Entity, JoinColumn, OneToOne, PrimaryColumn, PrimaryGeneratedColumn } from "typeorm";
 
+@Entity('cart')
 export class Cart {
-
+    constructor(user:User){
+        this.user=user;
+    }
     @PrimaryGeneratedColumn()
     cartId:number;
     @OneToOne(()=> User)

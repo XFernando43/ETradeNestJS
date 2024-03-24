@@ -1,6 +1,7 @@
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Console } from 'console';
+import { Cart } from 'src/Product-Managment/Domain/Entities/cart.entity';
 import { Email } from 'src/User-Managment/Domain/Entities/email.entity';
 import { Role } from 'src/User-Managment/Domain/Entities/role.entity';
 import { User } from 'src/User-Managment/Domain/Entities/user.entity';
@@ -13,20 +14,28 @@ export class UsersService {
 
   constructor(@InjectRepository(User) private userRepository:Repository<User>,
               @InjectRepository(Role) private roleRepository:Repository<Role>,
-              @InjectRepository(Email) private emailRepository:Repository<Email>
+              @InjectRepository(Email) private emailRepository:Repository<Email>,
+              @InjectRepository(Cart) private CartRepository:Repository<Cart>
               ){}
 
   async create(createUserDto: CreateUserDto, roleId:number) {
     try{
 
       let roleFinded = await this.roleRepository.findOne({where:{roleId:roleId}});
+      
       const newUser = new User(createUserDto.name,createUserDto.username,createUserDto.lastName,createUserDto.bornDate,roleFinded);
       const userDb = await this.userRepository.create(newUser);
       await this.userRepository.save(userDb);
+
       const newEmail = new Email(createUserDto.email,createUserDto.password); newEmail.user = userDb;
       const EmailDb = await this.emailRepository.create(newEmail);      
       await this.emailRepository.save(EmailDb);
       
+      const newCart = new Cart(userDb);
+      const cartDb = await this.CartRepository.create(newCart);
+      await this.CartRepository.save(cartDb);
+
+
       return {
         status:201,
         user: newUser,
