@@ -9,6 +9,7 @@ import { CartModule } from './Product-Managment/Infracstruture/cart.module';
 import { AddressModule } from './User-Managment/InfraStructure/address.module';
 import { UsersModule } from './User-Managment/InfraStructure/users.module';
 import { RoleModule } from './User-Managment/InfraStructure/role.module';
+import { ReviewModule } from './Product-Managment/Infracstruture/review.module';
 
 @Module({
   imports: [
@@ -20,7 +21,7 @@ import { RoleModule } from './User-Managment/InfraStructure/role.module';
       password: '123456789',
       database: 'etrade',
       entities: [__dirname + '/**/*.entity{.ts,.js}'],
-      synchronize: true, 
+      synchronize: false, 
       logging:true, 
     }),
     CategoriesModule,
@@ -30,6 +31,7 @@ import { RoleModule } from './User-Managment/InfraStructure/role.module';
     AddressModule,
     UsersModule,
     RoleModule,
+    ReviewModule,
   ],
   controllers: [AppController],
   providers: [AppService],
