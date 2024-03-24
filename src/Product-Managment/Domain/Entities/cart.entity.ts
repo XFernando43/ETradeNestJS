@@ -1,7 +1,7 @@
 import { User } from "src/User-Managment/Domain/Entities/user.entity";
 import { Entity, JoinColumn, OneToOne, PrimaryColumn, PrimaryGeneratedColumn } from "typeorm";
 
-@Entity('cart')
+@Entity('carts')
 export class Cart {
     constructor(user:User){
         this.user=user;
