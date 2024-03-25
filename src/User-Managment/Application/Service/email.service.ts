@@ -1,55 +1,86 @@
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { Address } from 'src/User-Managment/Domain/Entities/address.entity';
+import { Email } from 'src/User-Managment/Domain/Entities/email.entity';
+import { CreateEmailDto } from 'src/User-Managment/Domain/dto/email/create-email.dto';
 
 @Injectable()
 export class EmailService {
 
-  constructor(@InjectRepository(Address) private readonly AddressRepository:Repository<Address>){}
+  constructor(@InjectRepository(Email) private readonly EmailRepository:Repository<Email>){}
 
-  async create(createEmailDto: any) {
+  async create(createEmailDto: CreateEmailDto):Promise<Email> {
     try{
-      const newEmail = await this.AddressRepository.create(createEmailDto);
-      return this.AddressRepository.save(newEmail);
+      const newEmail = await this.EmailRepository.create(createEmailDto);
+      await this.EmailRepository.save(newEmail);
+      return newEmail; 
     }catch(error){
-      throw new HttpException(error,HttpStatus.CONFLICT);
+      throw new HttpException(error,HttpStatus.BAD_GATEWAY);
     }
   }
-
-  async findAll() {
-    try{
-      return await this.AddressRepository.find();
-    }catch(Error){
-      throw new Error
-    }
-  }
-
-  async findOne(id: number) {
-    try{
-      return await this.AddressRepository.findOne({
-        where:{
-          addressId:id
-        }
-      })
-    }catch(error){
-
-    }
-  }
-
-  async update(id: number, updateEmailDto: any) {
-    try{
-      if (id === 0) {
-        return 'product no econtrado';
+  
+  async findAll(): Promise<Email[]> {
+    try {
+      const emails = await this.EmailRepository.find();
+      if (emails.length > 0) {
+        return emails;
       } else {
-        return await this.AddressRepository.update(id, updateEmailDto);
+        throw new HttpException("No se encontraron correos electrónicos", HttpStatus.NOT_FOUND);
       }
-    }catch(error){
-      throw new HttpException(error, HttpStatus.CONFLICT);
+    } catch (error) {
+      console.error("Error al buscar correos electrónicos:", error);
+      throw new HttpException("Error interno del servidor", HttpStatus.INTERNAL_SERVER_ERROR);
     }
   }
-
-  remove(id: number) {
-    return `This action removes a #${id} email`;
+  
+  async findOne(id: number): Promise<Email | undefined> {
+    try {
+      const email = await this.EmailRepository.findOne({
+        where: {
+          emailId: id
+        }
+      });
+      if (email) {
+        return email;
+      } else {
+        throw new HttpException(`No se encontró el correo electrónico con el ID ${id}`, HttpStatus.NOT_FOUND);
+      }
+    } catch (error) {
+      console.error("Error al buscar correo electrónico por ID:", error);
+      throw new HttpException("Error interno del servidor", HttpStatus.INTERNAL_SERVER_ERROR);
+    }
   }
+  
+
+  async update(id: number, updateEmailDto: any): Promise<Email | undefined> {
+    try {
+      const existingEmail = await this.EmailRepository.findOne({where:{emailId:id}});
+  
+      if (!existingEmail) {
+        throw new HttpException(`No se encontró el correo electrónico con el ID ${id}`, HttpStatus.NOT_FOUND);
+      }
+  
+      await this.EmailRepository.update(id, updateEmailDto);
+      return await this.EmailRepository.findOne({where:{emailId:id}});
+    } catch (error) {
+      console.error("Error al actualizar correo electrónico:", error);
+      throw new HttpException("Error interno del servidor", HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+  }
+  
+  async remove(id: number): Promise<void> {
+    try {
+      const existingEmail = await this.EmailRepository.findOne({where:{emailId:id}});
+      if (!existingEmail) {
+        throw new HttpException(`No se encontró el correo electrónico con el ID ${id}`, HttpStatus.NOT_FOUND);
+      }
+      await this.EmailRepository.delete(id);
+    } catch (error) {
+      console.error("Error al eliminar correo electrónico:", error);
+      throw new HttpException("Error interno del servidor", HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+  }
+  
+
+
 }

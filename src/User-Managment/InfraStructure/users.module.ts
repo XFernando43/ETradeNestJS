@@ -6,10 +6,16 @@ import { UsersService } from '../Application/Service/users.service';
 import { Role } from '../Domain/Entities/role.entity';
 import { Email } from '../Domain/Entities/email.entity';
 import { Cart } from 'src/Product-Managment/Domain/Entities/cart.entity';
+import { CartModule } from 'src/Product-Managment/Infracstruture/cart.module';
+import { EmailModule } from './email.module';
+import { RoleModule } from './role.module';
 
 @Module({
   imports:[
-    TypeOrmModule.forFeature([User, Role, Email, Cart]), 
+    TypeOrmModule.forFeature([User]),
+    CartModule,
+    EmailModule,
+    RoleModule, 
   ],
   controllers: [UsersController],
   providers: [UsersService],

@@ -2,9 +2,10 @@ import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/commo
 import { EmailService } from '../Service/email.service';
 import { CreateEmailDto } from 'src/User-Managment/Domain/dto/email/create-email.dto';
 import { UpdateEmailDto } from 'src/User-Managment/Domain/dto/email/update-email.dto';
-
+import { ApiTags } from '@nestjs/swagger';
 
 @Controller('email')
+@ApiTags('emails')
 export class EmailController {
   constructor(private readonly emailService: EmailService) {}
 

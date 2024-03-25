@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { CreateCartDto } from '../../Domain/Dto/cart/create-cart.dto';
 import { UpdateCartDto } from '../../Domain/Dto/cart/update-cart.dto';
 import { InjectRepository } from '@nestjs/typeorm';
@@ -11,6 +11,16 @@ export class CartService {
   constructor(@InjectRepository(Cart) private cartRepository: Repository<Cart>,
               @InjectRepository(User) private UserRepository:Repository<User>) {}
 
+  async create(CreateCartDto:CreateCartDto):Promise<Cart>{
+    try{
+      const newCart = await this.cartRepository.create(CreateCartDto);
+      await this.cartRepository.save(newCart);
+      return newCart;
+    }catch(error){
+      console.log(error);
+      throw new HttpException(error,HttpStatus.BAD_GATEWAY);
+    }
+  }
 
   async findByUser(id: number) {
     const userFinded = await this.UserRepository.findOne({where:{userId:id}});
