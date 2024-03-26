@@ -69,7 +69,7 @@ export class UsersService {
     }
   }
 
-  async findOne(id: number) {
+  async findOne(id: number):Promise<User> {
     try {
       const user = await this.userRepository.findOne({
         where: { userId: id },
@@ -81,10 +81,9 @@ export class UsersService {
           HttpStatus.NOT_FOUND,
         );
       }
-      return {
-        status: HttpStatus.OK,
-        user: user,
-      };
+      
+      return user;
+
     } catch (error) {
       console.error('Error finding all users:', error);
       throw new HttpException(

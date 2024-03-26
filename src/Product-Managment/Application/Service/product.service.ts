@@ -19,7 +19,7 @@ export class ProductService {
     return await this.productRepository.find({ relations: ['category'] });
   }
 
-  async getProduct(productId: number) {
+  async getProduct(productId: number):Promise<Product> {
     try {
       const product = await this.productRepository.findOne({
         relations: ['category'],
@@ -29,7 +29,7 @@ export class ProductService {
       });
 
       if (!product) {
-        return new HttpException('Product Doesnt Exists', HttpStatus.NOT_FOUND);
+        throw new HttpException('Product Doesnt Exists', HttpStatus.NOT_FOUND);
       }
       return product;
     } catch (error) {
