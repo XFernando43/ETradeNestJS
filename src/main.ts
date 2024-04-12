@@ -21,9 +21,9 @@ async function bootstrap() {
   });
 
   app.enableCors({
-    origin:'http://localhost:3001',
-    credentials:true
-  })
+    origin: '*',
+    // credentials: true // Si necesitas que las solicitudes con credenciales pasen CORS
+  });
 
   await app.listen(3001);
 }
