@@ -13,5 +13,9 @@ export class CreateProductDto {
     productStock: number;
     
     @ApiProperty()
+    productUrl:string;
+
+
+    @ApiProperty()
     categoryId:number;
 }
